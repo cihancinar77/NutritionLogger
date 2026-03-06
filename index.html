@@ -1461,10 +1461,12 @@ body {
       <button class="tab active" data-tab="calendar" onclick="switchTab('calendar')">Takvim</button>
       <button class="tab" data-tab="guide" onclick="switchTab('guide')">Besinlerim</button>
     </div>
-    <div class="user-info" id="userInfo" style="display:none">
+    <div style="display:flex;align-items:center;gap:10px;">
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Tema değiştir">&#9790;</button>
-      <span class="user-email" id="userEmail"></span>
-      <button class="logout-btn" onclick="handleLogout()">Çıkış</button>
+      <div class="user-info" id="userInfo" style="display:none">
+        <span class="user-email" id="userEmail"></span>
+        <button class="logout-btn" onclick="handleLogout()">Çıkış</button>
+      </div>
     </div>
   </div>
 
