@@ -16,22 +16,22 @@
   --bg-toolbar: rgba(255,255,255,0.72);
   --border: #d5d5d9;
   --border-light: #e8e8ec;
-  --border-focus: #E63926;
+  --border-focus: #0891B2;
   --text-primary: #1d1d1f;
   --text-secondary: #6e6e73;
   --text-muted: #aeaeb2;
-  --accent: #E63926;
-  --accent-protein: #E63926;
-  --accent-carb: #FF8C00;
-  --accent-fat: #C41E3A;
-  --accent-cal: #FF5722;
-  --accent-protein-bg: rgba(230,57,38,0.1);
-  --accent-carb-bg: rgba(255,140,0,0.1);
-  --accent-fat-bg: rgba(196,30,58,0.1);
-  --accent-cal-bg: rgba(255,87,34,0.1);
-  --success: #E63926;
-  --warning: #FF8C00;
-  --danger: #C41E3A;
+  --accent: #0891B2;
+  --accent-protein: #0D9488;
+  --accent-carb: #2563EB;
+  --accent-fat: #7C3AED;
+  --accent-cal: #0891B2;
+  --accent-protein-bg: rgba(13,148,136,0.1);
+  --accent-carb-bg: rgba(37,99,235,0.1);
+  --accent-fat-bg: rgba(124,58,237,0.1);
+  --accent-cal-bg: rgba(8,145,178,0.1);
+  --success: #0D9488;
+  --warning: #D97706;
+  --danger: #DC2626;
   --radius: 10px;
   --radius-sm: 7px;
   --radius-lg: 12px;
@@ -50,22 +50,22 @@
   --bg-toolbar: rgba(44,44,46,0.72);
   --border: #48484a;
   --border-light: #3a3a3c;
-  --border-focus: #FF4433;
+  --border-focus: #22D3EE;
   --text-primary: #f5f5f7;
   --text-secondary: #a1a1a6;
   --text-muted: #636366;
-  --accent: #FF4433;
-  --accent-protein: #FF4433;
-  --accent-carb: #FFA500;
-  --accent-fat: #D4263C;
-  --accent-cal: #FF6E40;
-  --accent-protein-bg: rgba(255,68,51,0.15);
-  --accent-carb-bg: rgba(255,165,0,0.15);
-  --accent-fat-bg: rgba(212,38,60,0.15);
-  --accent-cal-bg: rgba(255,110,64,0.15);
-  --success: #FF4433;
-  --warning: #FFA500;
-  --danger: #D4263C;
+  --accent: #22D3EE;
+  --accent-protein: #2DD4BF;
+  --accent-carb: #60A5FA;
+  --accent-fat: #A78BFA;
+  --accent-cal: #22D3EE;
+  --accent-protein-bg: rgba(45,212,191,0.15);
+  --accent-carb-bg: rgba(96,165,250,0.15);
+  --accent-fat-bg: rgba(167,139,250,0.15);
+  --accent-cal-bg: rgba(34,211,238,0.15);
+  --success: #2DD4BF;
+  --warning: #FBBF24;
+  --danger: #EF4444;
   --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
@@ -163,7 +163,7 @@ body {
 .logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #E63926, #FF8C00);
+  background: linear-gradient(135deg, #0891B2, #2DD4BF);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -1379,8 +1379,8 @@ body {
 
 /* Theme Toggle */
 .theme-toggle {
-  width: 32px;
   height: 32px;
+  padding: 0 10px;
   border: 0.5px solid var(--border);
   background: var(--bg-window);
   color: var(--text-secondary);
@@ -1389,7 +1389,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
   transition: var(--transition);
   flex-shrink: 0;
 }
@@ -1434,7 +1437,7 @@ body {
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
     <div class="auth-logo">
-      <div class="logo-icon" style="font-size:1.2rem">&#x1F525;</div>
+      <div class="logo-icon" style="font-size:1.2rem">&#x2697;</div>
       <h2>ANABOLIC KITCHEN</h2>
     </div>
     <div class="auth-title">Beslenme Takibi</div>
@@ -1454,7 +1457,7 @@ body {
 <div class="app">
   <div class="header">
     <div class="logo">
-      <div class="logo-icon" style="font-size:1.2rem">&#x1F525;</div>
+      <div class="logo-icon" style="font-size:1.2rem">&#x2697;</div>
       <h1>ANABOLIC KITCHEN<span>Beslenme Takibi</span></h1>
     </div>
     <div class="tabs">
@@ -1462,7 +1465,7 @@ body {
       <button class="tab" data-tab="guide" onclick="switchTab('guide')">Besinlerim</button>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Tema değiştir">&#9790;</button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Tema değiştir">&#9790; Dark</button>
       <div class="user-info" id="userInfo" style="display:none">
         <span class="user-email" id="userEmail"></span>
         <button class="logout-btn" onclick="handleLogout()">Çıkış</button>
@@ -1612,7 +1615,7 @@ function getTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const icon = document.getElementById('themeToggle');
-  if (icon) icon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
+  if (icon) icon.innerHTML = theme === 'dark' ? '&#9788; Light' : '&#9790; Dark';
 }
 
 function toggleTheme() {
