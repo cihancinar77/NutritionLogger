@@ -1234,9 +1234,196 @@ body {
 }
 .create-food-grid input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(0,122,255,0.12); }
 .empty-guide { text-align: center; padding: 48px 24px; color: var(--text-muted); font-size: 0.9rem; }
+
+/* Auth Overlay */
+.auth-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-window);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.auth-overlay.hidden { display: none; }
+
+.auth-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 32px;
+  width: 90%;
+  max-width: 380px;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo .logo-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+}
+
+.auth-logo h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.auth-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.auth-field {
+  margin-bottom: 12px;
+}
+
+.auth-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-window);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.auth-field input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.15);
+}
+
+.auth-error {
+  color: var(--danger);
+  font-size: 0.78rem;
+  text-align: center;
+  margin-bottom: 12px;
+  min-height: 18px;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 11px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 14px;
+}
+
+.auth-btn:hover { background: #0070E0; }
+.auth-btn:active { transform: scale(0.98); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.auth-switch {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.auth-switch a {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover { text-decoration: underline; }
+
+/* User info in header */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-email {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  padding: 5px 12px;
+  border: 0.5px solid var(--border);
+  background: var(--bg-window);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.logout-btn:hover { background: var(--bg-card-hover); color: var(--danger); border-color: rgba(255,59,48,0.3); }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon">M</div>
+      <h2>MAKRO</h2>
+    </div>
+    <div class="auth-title" id="authTitle">Giriş Yap</div>
+    <div id="authForm">
+      <div class="auth-field">
+        <label>E-posta</label>
+        <input type="email" id="authEmail" placeholder="ornek@mail.com">
+      </div>
+      <div class="auth-field">
+        <label>Şifre</label>
+        <input type="password" id="authPassword" placeholder="••••••••">
+      </div>
+      <div class="auth-field" id="authConfirmField" style="display:none">
+        <label>Şifre Tekrar</label>
+        <input type="password" id="authConfirmPassword" placeholder="••••••••">
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <button class="auth-btn" id="authBtn" onclick="handleAuth()">Giriş Yap</button>
+      <div class="auth-switch">
+        <span id="authSwitchText">Hesabınız yok mu?</span>
+        <a onclick="toggleAuthMode()" id="authSwitchLink">Kayıt Ol</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="macos-window">
 <div class="titlebar">
@@ -1252,6 +1439,10 @@ body {
     <div class="tabs">
       <button class="tab active" data-tab="calendar" onclick="switchTab('calendar')">Takvim</button>
       <button class="tab" data-tab="guide" onclick="switchTab('guide')">Besinlerim</button>
+    </div>
+    <div class="user-info" id="userInfo" style="display:none">
+      <span class="user-email" id="userEmail"></span>
+      <button class="logout-btn" onclick="handleLogout()">Çıkış</button>
     </div>
   </div>
 
@@ -1356,6 +1547,20 @@ body {
 <div class="quick-add-toast" id="quickAddToast"><span id="toastMsg"></span></div>
 
 <script>
+// ============ FIREBASE CONFIG ============
+const firebaseConfig = {
+  apiKey: "AIzaSyAw31saWUeNx6XztmdIW1d9OTuqIXc-qFY",
+  authDomain: "nutritionlogger-cc.firebaseapp.com",
+  projectId: "nutritionlogger-cc",
+  storageBucket: "nutritionlogger-cc.firebasestorage.app",
+  messagingSenderId: "910073783654",
+  appId: "1:910073783654:web:b9e8d1dba52590c04e14a7"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
 const MONTH_NAMES = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
 const DAY_NAMES = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
 const MAX_MEALS = 8;
@@ -1366,6 +1571,8 @@ let targets = { protein: 150, carb: 250, fat: 70, cal: 2200 };
 let customFoods = [];
 let saveCustomDebounce = null;
 let activeDropdown = null;
+let currentUser = null;
+let firestoreSaveTimeout = null;
 
 // ============ HELPERS ============
 function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -1373,8 +1580,92 @@ function formatDate(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${Str
 function parseDateStr(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y,m-1,d); }
 function showToast(msg) { const t = document.getElementById('quickAddToast'); document.getElementById('toastMsg').textContent = msg; t.classList.add('visible'); setTimeout(() => t.classList.remove('visible'), 2500); }
 
-// ============ STORAGE ============
-function loadData() {
+// ============ AUTH ============
+let isSignUpMode = false;
+
+function toggleAuthMode() {
+  isSignUpMode = !isSignUpMode;
+  document.getElementById('authTitle').textContent = isSignUpMode ? 'Kayıt Ol' : 'Giriş Yap';
+  document.getElementById('authBtn').textContent = isSignUpMode ? 'Kayıt Ol' : 'Giriş Yap';
+  document.getElementById('authConfirmField').style.display = isSignUpMode ? 'block' : 'none';
+  document.getElementById('authSwitchText').textContent = isSignUpMode ? 'Zaten hesabınız var mı?' : 'Hesabınız yok mu?';
+  document.getElementById('authSwitchLink').textContent = isSignUpMode ? 'Giriş Yap' : 'Kayıt Ol';
+  document.getElementById('authError').textContent = '';
+}
+
+function handleAuth() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const btn = document.getElementById('authBtn');
+  const errorEl = document.getElementById('authError');
+  errorEl.textContent = '';
+
+  if (!email || !password) { errorEl.textContent = 'E-posta ve şifre gerekli.'; return; }
+
+  if (isSignUpMode) {
+    const confirm = document.getElementById('authConfirmPassword').value;
+    if (password !== confirm) { errorEl.textContent = 'Şifreler eşleşmiyor.'; return; }
+    if (password.length < 6) { errorEl.textContent = 'Şifre en az 6 karakter olmalı.'; return; }
+    btn.disabled = true;
+    btn.textContent = 'Kayıt olunuyor...';
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => { btn.disabled = false; btn.textContent = 'Kayıt Ol'; })
+      .catch(err => { btn.disabled = false; btn.textContent = 'Kayıt Ol'; errorEl.textContent = getAuthErrorMessage(err.code); });
+  } else {
+    btn.disabled = true;
+    btn.textContent = 'Giriş yapılıyor...';
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => { btn.disabled = false; btn.textContent = 'Giriş Yap'; })
+      .catch(err => { btn.disabled = false; btn.textContent = 'Giriş Yap'; errorEl.textContent = getAuthErrorMessage(err.code); });
+  }
+}
+
+function getAuthErrorMessage(code) {
+  const messages = {
+    'auth/email-already-in-use': 'Bu e-posta zaten kullanılıyor.',
+    'auth/invalid-email': 'Geçersiz e-posta adresi.',
+    'auth/user-not-found': 'Bu e-posta ile kayıtlı hesap bulunamadı.',
+    'auth/wrong-password': 'Yanlış şifre.',
+    'auth/weak-password': 'Şifre en az 6 karakter olmalı.',
+    'auth/too-many-requests': 'Çok fazla deneme. Lütfen bekleyin.',
+    'auth/invalid-credential': 'E-posta veya şifre hatalı.',
+  };
+  return messages[code] || 'Bir hata oluştu. Tekrar deneyin.';
+}
+
+function handleLogout() {
+  auth.signOut();
+}
+
+// Allow Enter key to submit auth form
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !document.getElementById('authOverlay').classList.contains('hidden')) {
+    handleAuth();
+  }
+});
+
+// ============ AUTH STATE ============
+auth.onAuthStateChanged(async function(user) {
+  if (user) {
+    currentUser = user;
+    document.getElementById('authOverlay').classList.add('hidden');
+    document.getElementById('userInfo').style.display = 'flex';
+    document.getElementById('userEmail').textContent = user.email;
+    await loadFromFirestore();
+    initApp();
+  } else {
+    currentUser = null;
+    document.getElementById('authOverlay').classList.remove('hidden');
+    document.getElementById('userInfo').style.display = 'none';
+    data = {};
+    targets = { protein: 150, carb: 250, fat: 70, cal: 2200 };
+    customFoods = [];
+    selectedDate = null;
+  }
+});
+
+// ============ STORAGE (Firestore + localStorage cache) ============
+function loadDataFromLocalStorage() {
   try {
     const s = localStorage.getItem('makro_data_v2');
     if (s) data = JSON.parse(s);
@@ -1384,16 +1675,63 @@ function loadData() {
     if (c) customFoods = JSON.parse(c);
   } catch(e) {}
 }
-function saveData() {
+
+async function loadFromFirestore() {
+  if (!currentUser) return;
+  try {
+    const doc = await db.collection('users').doc(currentUser.uid).get();
+    if (doc.exists) {
+      const d = doc.data();
+      data = d.data || {};
+      targets = d.targets || { protein: 150, carb: 250, fat: 70, cal: 2200 };
+      customFoods = d.customFoods || [];
+      saveToLocalStorageCache();
+    } else {
+      // First login — migrate localStorage data if any
+      loadDataFromLocalStorage();
+      const hasData = Object.keys(data).length > 0 || customFoods.length > 0;
+      if (hasData) {
+        await saveToFirestoreNow();
+        showToast('Mevcut verileriniz hesabınıza aktarıldı');
+      }
+    }
+  } catch(e) {
+    console.error('Firestore load error:', e);
+    loadDataFromLocalStorage();
+    showToast('Bulut verileri yüklenemedi, yerel veriler kullanılıyor');
+  }
+}
+
+function saveToLocalStorageCache() {
   localStorage.setItem('makro_data_v2', JSON.stringify(data));
   localStorage.setItem('makro_targets', JSON.stringify(targets));
   localStorage.setItem('makro_custom_foods', JSON.stringify(customFoods));
+}
+
+async function saveToFirestoreNow() {
+  if (!currentUser) return;
+  try {
+    await db.collection('users').doc(currentUser.uid).set({
+      data: data,
+      targets: targets,
+      customFoods: customFoods,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch(e) {
+    console.error('Firestore save error:', e);
+  }
+}
+
+function saveData() {
+  saveToLocalStorageCache();
+  // Debounced Firestore save (800ms)
+  clearTimeout(firestoreSaveTimeout);
+  firestoreSaveTimeout = setTimeout(() => saveToFirestoreNow(), 800);
   if (typeof renderAverages === 'function') renderAverages();
 }
 
 // ============ INIT ============
-function init() {
-  loadData();
+function initApp() {
   const today = new Date();
   currentMonth = today.getMonth();
   currentYear = today.getFullYear();
@@ -1745,7 +2083,7 @@ function addFoodToMeal(mealIdx, food) {
 }
 
 // ============ KICK OFF ============
-init();
+// App initialization is handled by Firebase onAuthStateChanged listener above.
 </script>
 </body>
 </html>
