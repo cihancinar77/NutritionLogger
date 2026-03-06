@@ -16,21 +16,21 @@
   --bg-toolbar: rgba(255,255,255,0.72);
   --border: #d5d5d9;
   --border-light: #e8e8ec;
-  --border-focus: #0891B2;
+  --border-focus: #15803D;
   --text-primary: #1d1d1f;
   --text-secondary: #6e6e73;
   --text-muted: #aeaeb2;
-  --accent: #0891B2;
-  --accent-protein: #0D9488;
-  --accent-carb: #2563EB;
-  --accent-fat: #7C3AED;
-  --accent-cal: #0891B2;
-  --accent-protein-bg: rgba(13,148,136,0.1);
-  --accent-carb-bg: rgba(37,99,235,0.1);
-  --accent-fat-bg: rgba(124,58,237,0.1);
-  --accent-cal-bg: rgba(8,145,178,0.1);
-  --success: #0D9488;
-  --warning: #D97706;
+  --accent: #15803D;
+  --accent-protein: #16A34A;
+  --accent-carb: #CA8A04;
+  --accent-fat: #DC2626;
+  --accent-cal: #7C3AED;
+  --accent-protein-bg: rgba(22,163,74,0.1);
+  --accent-carb-bg: rgba(202,138,4,0.1);
+  --accent-fat-bg: rgba(220,38,38,0.1);
+  --accent-cal-bg: rgba(124,58,237,0.1);
+  --success: #16A34A;
+  --warning: #CA8A04;
   --danger: #DC2626;
   --radius: 10px;
   --radius-sm: 7px;
@@ -50,22 +50,22 @@
   --bg-toolbar: rgba(44,44,46,0.72);
   --border: #48484a;
   --border-light: #3a3a3c;
-  --border-focus: #22D3EE;
+  --border-focus: #4ADE80;
   --text-primary: #f5f5f7;
   --text-secondary: #a1a1a6;
   --text-muted: #636366;
-  --accent: #22D3EE;
-  --accent-protein: #2DD4BF;
-  --accent-carb: #60A5FA;
-  --accent-fat: #A78BFA;
-  --accent-cal: #22D3EE;
-  --accent-protein-bg: rgba(45,212,191,0.15);
-  --accent-carb-bg: rgba(96,165,250,0.15);
-  --accent-fat-bg: rgba(167,139,250,0.15);
-  --accent-cal-bg: rgba(34,211,238,0.15);
-  --success: #2DD4BF;
+  --accent: #4ADE80;
+  --accent-protein: #4ADE80;
+  --accent-carb: #FBBF24;
+  --accent-fat: #F87171;
+  --accent-cal: #A78BFA;
+  --accent-protein-bg: rgba(74,222,128,0.15);
+  --accent-carb-bg: rgba(251,191,36,0.15);
+  --accent-fat-bg: rgba(248,113,113,0.15);
+  --accent-cal-bg: rgba(167,139,250,0.15);
+  --success: #4ADE80;
   --warning: #FBBF24;
-  --danger: #EF4444;
+  --danger: #F87171;
   --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
@@ -163,7 +163,7 @@ body {
 .logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #0891B2, #2DD4BF);
+  background: linear-gradient(135deg, #15803D, #4ADE80);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -1427,6 +1427,95 @@ body {
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.3);
 }
+
+/* Settings View */
+.settings-view { display: none; }
+.settings-view.active { display: block; animation: slideUp 0.3s ease; padding: 24px; }
+
+.settings-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  max-width: 520px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 0.5px solid var(--border-light);
+}
+
+.settings-row:last-child { border-bottom: none; }
+
+.settings-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.settings-label small {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.seg-control {
+  display: flex;
+  gap: 1px;
+  background: rgba(118,118,128,0.12);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.seg-btn {
+  padding: 6px 16px;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.seg-btn:hover { color: var(--text-primary); }
+
+.seg-btn.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04);
+}
+
+.settings-logout-btn {
+  padding: 8px 20px;
+  border: 0.5px solid var(--danger);
+  background: none;
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.settings-logout-btn:hover { background: rgba(220,38,38,0.08); }
+.settings-logout-btn:active { transform: scale(0.97); }
+
+.settings-user {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -1461,15 +1550,12 @@ body {
       <h1>ANABOLIC KITCHEN<span>Beslenme Takibi</span></h1>
     </div>
     <div class="tabs">
-      <button class="tab active" data-tab="calendar" onclick="switchTab('calendar')">Takvim</button>
-      <button class="tab" data-tab="guide" onclick="switchTab('guide')">Besinlerim</button>
+      <button class="tab active" data-tab="calendar" onclick="switchTab('calendar')" id="tabCalendar">Takvim</button>
+      <button class="tab" data-tab="guide" onclick="switchTab('guide')" id="tabGuide">Besinlerim</button>
+      <button class="tab" data-tab="settings" onclick="switchTab('settings')" id="tabSettings">Ayarlar</button>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Tema değiştir">&#9790; Dark</button>
-      <div class="user-info" id="userInfo" style="display:none">
-        <span class="user-email" id="userEmail"></span>
-        <button class="logout-btn" onclick="handleLogout()">Çıkış</button>
-      </div>
+    <div class="user-info" id="userInfo" style="display:none">
+      <span class="user-email" id="userEmail"></span>
     </div>
   </div>
 
@@ -1550,6 +1636,32 @@ body {
     </div>
     <div class="empty-guide" id="emptyGuide" style="display:none">Henüz besin eklemediniz. Yukarıdan yeni besin oluşturun.</div>
   </div>
+
+  <div class="settings-view" id="settingsView">
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-label" id="settingsLangLabel">Dil<small id="settingsLangSub">Uygulama dilini seçin</small></div>
+        <div class="seg-control" id="langControl">
+          <button class="seg-btn" data-lang="tr" onclick="setLang('tr')">Türkçe</button>
+          <button class="seg-btn" data-lang="en" onclick="setLang('en')">English</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label" id="settingsThemeLabel">Tema<small id="settingsThemeSub">Açık veya koyu tema</small></div>
+        <div class="seg-control" id="themeControl">
+          <button class="seg-btn" data-theme-opt="light" onclick="setThemeFromSettings('light')" id="themeBtnLight">&#9788; Light</button>
+          <button class="seg-btn" data-theme-opt="dark" onclick="setThemeFromSettings('dark')" id="themeBtnDark">&#9790; Dark</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label" id="settingsAccountLabel">Hesap</div>
+          <div class="settings-user" id="settingsUserEmail"></div>
+        </div>
+        <button class="settings-logout-btn" onclick="handleLogout()" id="settingsLogoutBtn">Çıkış Yap</button>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -1588,8 +1700,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const MONTH_NAMES = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-const DAY_NAMES = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+function MONTH_NAMES() { return t('months'); }
+function DAY_NAMES() { return t('daysShort'); }
 const MAX_MEALS = 8;
 
 let currentMonth, currentYear, selectedDate;
@@ -1614,18 +1726,305 @@ function getTheme() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  const icon = document.getElementById('themeToggle');
-  if (icon) icon.innerHTML = theme === 'dark' ? '&#9788; Light' : '&#9790; Dark';
+  syncThemeButtons(theme);
 }
 
-function toggleTheme() {
-  const newTheme = getTheme() === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('makro_theme', newTheme);
-  applyTheme(newTheme);
+function setThemeFromSettings(theme) {
+  localStorage.setItem('makro_theme', theme);
+  applyTheme(theme);
+}
+
+function syncThemeButtons(theme) {
+  document.querySelectorAll('#themeControl .seg-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-theme-opt') === theme);
+  });
 }
 
 // Apply saved theme immediately to prevent flash
 applyTheme(getTheme());
+
+// ============ I18N ============
+const translations = {
+  tr: {
+    // Tabs
+    calendar: 'Takvim',
+    myFoods: 'Besinlerim',
+    settings: 'Ayarlar',
+    // Header subtitle
+    subtitle: 'Beslenme Takibi',
+    // Targets bar
+    protein: 'Protein',
+    carb: 'Karbonhidrat',
+    fat: 'Yağ',
+    calories: 'Kalori',
+    carbShort: 'Karb',
+    fatShort: 'Yağ',
+    // Calendar
+    today: 'Bugün',
+    selectDay: 'Bir gün seçin',
+    selectDayDesc: 'Öğünlerinizi kaydetmek için takvimden bir gün seçin',
+    // Detail summary
+    proteinShort: 'Protein',
+    // Meals
+    deleteMeal: 'Öğünü sil',
+    addFood: '+ Besin Ekle',
+    addNewMeal: '+ Yeni Öğün Ekle',
+    foodName: 'Besin adı',
+    gram: 'gram',
+    maxMeals: 'En fazla 8 öğün ekleyebilirsiniz',
+    // Guide
+    createNewFood: 'Yeni Besin Oluştur',
+    foodNameLabel: 'Besin Adı',
+    foodNamePlaceholder: 'ör. Snickers Bar',
+    portion: 'Porsiyon',
+    portionPlaceholder: 'ör. 100g / 1 adet',
+    proteinG: 'Protein (g)',
+    carbG: 'Karb (g)',
+    fatG: 'Yağ (g)',
+    saveFood: 'Besin Kaydet',
+    searchFood: 'Besin ara...',
+    food: 'Besin',
+    emptyGuide: 'Henüz besin eklemediniz. Yukarıdan yeni besin oluşturun.',
+    delete: 'Sil',
+    enterFoodName: 'Besin adı girin',
+    saved: 'kaydedildi',
+    // Target modal
+    dailyGoals: 'Günlük Hedefler',
+    cancel: 'İptal',
+    save: 'Kaydet',
+    // Meal picker
+    whichMeal: 'hangi öğüne eklensin?',
+    foodsCount: 'besin',
+    addMealFirst: 'Önce bir öğün ekleyin',
+    selectDayFirst: 'Önce takvimden bir gün seçin',
+    // Averages
+    last7: 'Son 7 gün',
+    last30: 'Son 30 gün',
+    last90: 'Son 90 gün',
+    days: 'gün',
+    // Auth
+    signInGoogle: 'Google ile Giriş Yap',
+    tooManyAttempts: 'Çok fazla deneme. Lütfen bekleyin.',
+    loginFailed: 'Giriş başarısız. Tekrar deneyin.',
+    dataMigrated: 'Mevcut verileriniz hesabınıza aktarıldı',
+    cloudLoadFailed: 'Bulut verileri yüklenemedi, yerel veriler kullanılıyor',
+    // Settings
+    language: 'Dil',
+    languageSub: 'Uygulama dilini seçin',
+    theme: 'Tema',
+    themeSub: 'Açık veya koyu tema',
+    account: 'Hesap',
+    logout: 'Çıkış Yap',
+    // Months
+    months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+    // Days short
+    daysShort: ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],
+    // Days full
+    daysFull: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+  },
+  en: {
+    calendar: 'Calendar',
+    myFoods: 'My Foods',
+    settings: 'Settings',
+    subtitle: 'Nutrition Tracker',
+    protein: 'Protein',
+    carb: 'Carbohydrate',
+    fat: 'Fat',
+    calories: 'Calories',
+    carbShort: 'Carb',
+    fatShort: 'Fat',
+    today: 'Today',
+    selectDay: 'Select a day',
+    selectDayDesc: 'Pick a day from the calendar to log your meals',
+    proteinShort: 'Protein',
+    deleteMeal: 'Delete meal',
+    addFood: '+ Add Food',
+    addNewMeal: '+ Add New Meal',
+    foodName: 'Food name',
+    gram: 'gram',
+    maxMeals: 'Maximum 8 meals allowed',
+    createNewFood: 'Create New Food',
+    foodNameLabel: 'Food Name',
+    foodNamePlaceholder: 'e.g. Snickers Bar',
+    portion: 'Portion',
+    portionPlaceholder: 'e.g. 100g / 1 piece',
+    proteinG: 'Protein (g)',
+    carbG: 'Carb (g)',
+    fatG: 'Fat (g)',
+    saveFood: 'Save Food',
+    searchFood: 'Search food...',
+    food: 'Food',
+    emptyGuide: 'No foods added yet. Create one above.',
+    delete: 'Delete',
+    enterFoodName: 'Enter food name',
+    saved: 'saved',
+    dailyGoals: 'Daily Goals',
+    cancel: 'Cancel',
+    save: 'Save',
+    whichMeal: 'which meal to add to?',
+    foodsCount: 'foods',
+    addMealFirst: 'Add a meal first',
+    selectDayFirst: 'Select a day from calendar first',
+    last7: 'Last 7 days',
+    last30: 'Last 30 days',
+    last90: 'Last 90 days',
+    days: 'days',
+    signInGoogle: 'Sign in with Google',
+    tooManyAttempts: 'Too many attempts. Please wait.',
+    loginFailed: 'Login failed. Try again.',
+    dataMigrated: 'Your existing data has been synced to your account',
+    cloudLoadFailed: 'Could not load cloud data, using local data',
+    language: 'Language',
+    languageSub: 'Choose app language',
+    theme: 'Theme',
+    themeSub: 'Light or dark mode',
+    account: 'Account',
+    logout: 'Log Out',
+    months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    daysShort: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    daysFull: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+  }
+};
+
+function getLang() {
+  return localStorage.getItem('makro_lang') || 'tr';
+}
+
+function t(key) {
+  const lang = getLang();
+  return translations[lang][key] || translations['tr'][key] || key;
+}
+
+function setLang(lang) {
+  localStorage.setItem('makro_lang', lang);
+  applyLanguage();
+  syncSettingsUI();
+  // Re-render dynamic content
+  if (typeof renderCalendar === 'function') renderCalendar();
+  if (typeof renderGuide === 'function') renderGuide();
+  if (typeof renderMeals === 'function' && selectedDate) renderMeals();
+  if (typeof renderAverages === 'function') renderAverages();
+  if (selectedDate) {
+    const dt = parseDateStr(selectedDate);
+    const dayName = t('daysFull')[dt.getDay()];
+    document.getElementById('detailDate').textContent = `${dt.getDate()} ${t('months')[dt.getMonth()]} ${dayName}`;
+  }
+}
+
+function applyLanguage() {
+  const lang = getLang();
+  document.documentElement.lang = lang === 'en' ? 'en' : 'tr';
+  // Title
+  document.title = `Anabolic Kitchen — ${t('subtitle')}`;
+  // Titlebar
+  const tb = document.querySelector('.titlebar-title');
+  if (tb) tb.textContent = `Anabolic Kitchen — ${t('subtitle')}`;
+  // Logo subtitle
+  const logoSpan = document.querySelector('.logo h1 span');
+  if (logoSpan) logoSpan.textContent = t('subtitle');
+  // Auth
+  const authTitle = document.querySelector('.auth-title');
+  if (authTitle) authTitle.textContent = t('subtitle');
+  const googleBtn = document.getElementById('googleBtn');
+  if (googleBtn) {
+    const svg = googleBtn.querySelector('svg');
+    googleBtn.textContent = '';
+    if (svg) googleBtn.appendChild(svg);
+    googleBtn.appendChild(document.createTextNode(' ' + t('signInGoogle')));
+  }
+  // Tabs
+  document.getElementById('tabCalendar').textContent = t('calendar');
+  document.getElementById('tabGuide').textContent = t('myFoods');
+  document.getElementById('tabSettings').textContent = t('settings');
+  // Target labels
+  const targetLabels = document.querySelectorAll('.target-card .label');
+  if (targetLabels[0]) targetLabels[0].textContent = t('protein');
+  if (targetLabels[1]) targetLabels[1].textContent = t('carb');
+  if (targetLabels[2]) targetLabels[2].textContent = t('fat');
+  if (targetLabels[3]) targetLabels[3].textContent = t('calories');
+  // Calendar today button
+  const todayBtn = document.querySelector('.today-btn');
+  if (todayBtn) todayBtn.textContent = t('today');
+  // No selection
+  const noSelH3 = document.querySelector('.no-selection h3');
+  if (noSelH3) noSelH3.textContent = t('selectDay');
+  const noSelP = document.querySelector('.no-selection p');
+  if (noSelP) noSelP.textContent = t('selectDayDesc');
+  // Summary labels
+  const sumLabels = document.querySelectorAll('.summary-label');
+  if (sumLabels[0]) sumLabels[0].textContent = t('proteinShort');
+  if (sumLabels[1]) sumLabels[1].textContent = t('carbShort');
+  if (sumLabels[2]) sumLabels[2].textContent = t('fatShort');
+  if (sumLabels[3]) sumLabels[3].textContent = t('calories');
+  // Guide
+  const createH3 = document.querySelector('.create-food-form h3');
+  if (createH3) createH3.textContent = t('createNewFood');
+  const guideSearch = document.getElementById('guideSearchInput');
+  if (guideSearch) guideSearch.placeholder = t('searchFood');
+  const emptyGuide = document.getElementById('emptyGuide');
+  if (emptyGuide) emptyGuide.textContent = t('emptyGuide');
+  // Guide table headers
+  const ths = document.querySelectorAll('.guide-table thead th');
+  if (ths[0]) ths[0].textContent = t('food');
+  if (ths[1]) ths[1].textContent = t('proteinShort');
+  if (ths[2]) ths[2].textContent = t('carbShort');
+  if (ths[3]) ths[3].textContent = t('fatShort');
+  if (ths[4]) ths[4].textContent = t('calories');
+  // Create food form labels
+  const cfLabels = document.querySelectorAll('.create-food-grid label');
+  cfLabels.forEach(l => {
+    if (l.classList.contains('p')) l.textContent = t('proteinG');
+    else if (l.classList.contains('c')) l.textContent = t('carbG');
+    else if (l.classList.contains('f')) l.textContent = t('fatG');
+  });
+  const cfNameLabel = document.querySelector('.create-food-grid.full label');
+  if (cfNameLabel) cfNameLabel.textContent = t('foodNameLabel');
+  const cfNameInput = document.getElementById('cf-name');
+  if (cfNameInput) cfNameInput.placeholder = t('foodNamePlaceholder');
+  const portionLabels = document.querySelectorAll('.create-food-grid label');
+  portionLabels.forEach(l => {
+    if (!l.classList.contains('p') && !l.classList.contains('c') && !l.classList.contains('f') && !l.classList.contains('k') && l !== cfNameLabel) {
+      l.textContent = t('portion');
+    }
+  });
+  const cfPortion = document.getElementById('cf-portion');
+  if (cfPortion) cfPortion.placeholder = t('portionPlaceholder');
+  const saveFoodBtn = document.querySelector('.create-food-form .btn-primary');
+  if (saveFoodBtn) saveFoodBtn.textContent = t('saveFood');
+  // Target editor modal
+  const targetH3 = document.querySelector('.target-edit-modal h3');
+  if (targetH3) targetH3.textContent = t('dailyGoals');
+  const editLabels = document.querySelectorAll('.target-edit-row label');
+  if (editLabels[0]) editLabels[0].textContent = t('proteinShort');
+  if (editLabels[1]) editLabels[1].textContent = t('carbShort');
+  if (editLabels[2]) editLabels[2].textContent = t('fatShort');
+  if (editLabels[3]) editLabels[3].textContent = t('calories');
+  const editActions = document.querySelectorAll('.target-edit-actions .btn');
+  if (editActions[0]) editActions[0].textContent = t('cancel');
+  if (editActions[1]) editActions[1].textContent = t('save');
+  // Settings
+  document.getElementById('settingsLangLabel').innerHTML = t('language') + `<small id="settingsLangSub">${t('languageSub')}</small>`;
+  document.getElementById('settingsThemeLabel').innerHTML = t('theme') + `<small id="settingsThemeSub">${t('themeSub')}</small>`;
+  document.getElementById('settingsAccountLabel').textContent = t('account');
+  document.getElementById('settingsLogoutBtn').textContent = t('logout');
+}
+
+function syncSettingsUI() {
+  // Sync language buttons
+  const lang = getLang();
+  document.querySelectorAll('#langControl .seg-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  // Sync theme buttons
+  syncThemeButtons(getTheme());
+  // Sync user email
+  const email = document.getElementById('userEmail');
+  const settingsEmail = document.getElementById('settingsUserEmail');
+  if (email && settingsEmail) settingsEmail.textContent = email.textContent;
+}
+
+// Apply saved language immediately
+applyLanguage();
 
 // ============ AUTH (Google only) ============
 const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -1641,8 +2040,8 @@ function handleGoogleSignIn() {
       btn.disabled = false;
       if (err.code === 'auth/popup-closed-by-user') return;
       errorEl.textContent = err.code === 'auth/too-many-requests'
-        ? 'Çok fazla deneme. Lütfen bekleyin.'
-        : 'Giriş başarısız. Tekrar deneyin.';
+        ? t('tooManyAttempts')
+        : t('loginFailed');
     });
 }
 
@@ -1660,6 +2059,7 @@ auth.onAuthStateChanged(async function(user) {
     document.getElementById('authOverlay').classList.add('hidden');
     document.getElementById('userInfo').style.display = 'flex';
     document.getElementById('userEmail').textContent = user.displayName || user.email;
+    document.getElementById('settingsUserEmail').textContent = user.displayName || user.email;
     await loadFromFirestore();
     initApp();
   } else {
@@ -1701,13 +2101,13 @@ async function loadFromFirestore() {
       const hasData = Object.keys(data).length > 0 || customFoods.length > 0;
       if (hasData) {
         await saveToFirestoreNow();
-        showToast('Mevcut verileriniz hesabınıza aktarıldı');
+        showToast(t('dataMigrated'));
       }
     }
   } catch(e) {
     console.error('Firestore load error:', e);
     loadDataFromLocalStorage();
-    showToast('Bulut verileri yüklenemedi, yerel veriler kullanılıyor');
+    showToast(t('cloudLoadFailed'));
   }
 }
 
@@ -1747,6 +2147,8 @@ function initApp() {
   const today = new Date();
   currentMonth = today.getMonth();
   currentYear = today.getFullYear();
+  applyLanguage();
+  syncSettingsUI();
   renderCalendar();
   renderGuide();
   updateTargetDisplay();
@@ -1759,14 +2161,17 @@ function switchTab(tab) {
   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
   document.getElementById('calendarView').classList.toggle('active', tab === 'calendar');
   document.getElementById('guideView').classList.toggle('active', tab === 'guide');
+  document.getElementById('settingsView').classList.toggle('active', tab === 'settings');
+  document.querySelector('.targets-bar').style.display = tab === 'calendar' ? '' : 'none';
+  if (tab === 'settings') syncSettingsUI();
 }
 
 // ============ CALENDAR ============
 function renderCalendar() {
-  document.getElementById('calendarTitle').textContent = `${MONTH_NAMES[currentMonth]} ${currentYear}`;
+  document.getElementById('calendarTitle').textContent = `${MONTH_NAMES()[currentMonth]} ${currentYear}`;
   const grid = document.getElementById('calendarGrid');
   grid.innerHTML = '';
-  DAY_NAMES.forEach(d => { const el = document.createElement('div'); el.className='day-header'; el.textContent=d; grid.appendChild(el); });
+  DAY_NAMES().forEach(d => { const el = document.createElement('div'); el.className='day-header'; el.textContent=d; grid.appendChild(el); });
   let startDay = new Date(currentYear, currentMonth, 1).getDay() - 1;
   if (startDay < 0) startDay = 6;
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -1805,8 +2210,8 @@ function selectDay(dateStr) {
   document.getElementById('noSelection').style.display = 'none';
   document.getElementById('dayDetail').style.display = 'block';
   const dt = parseDateStr(dateStr);
-  const dayName = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'][dt.getDay()];
-  document.getElementById('detailDate').textContent = `${dt.getDate()} ${MONTH_NAMES[dt.getMonth()]} ${dayName}`;
+  const dayName = t('daysFull')[dt.getDay()];
+  document.getElementById('detailDate').textContent = `${dt.getDate()} ${MONTH_NAMES()[dt.getMonth()]} ${dayName}`;
   renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
 }
 
@@ -1816,7 +2221,7 @@ function getMeals() { return data[selectedDate]?.meals || []; }
 function addMeal() {
   if (!selectedDate) return;
   const meals = getMeals();
-  if (meals.length >= MAX_MEALS) { showToast('En fazla 8 öğün ekleyebilirsiniz'); return; }
+  if (meals.length >= MAX_MEALS) { showToast(t('maxMeals')); return; }
   meals.push({ foods: [] });
   saveData(true); renderMeals(); renderCalendar();
 }
@@ -1865,13 +2270,13 @@ function renderMeals() {
         <div class="meal-section-title">Meal ${mealIdx + 1}</div>
         <div style="display:flex;align-items:center;gap:8px">
           <div class="meal-section-total">${meal.foods.length > 0 && mealTotals.cal > 0 ? Math.round(mealTotals.cal)+' kcal' : ''}</div>
-          <button class="remove-meal-btn" onclick="removeMeal(${mealIdx})" title="Öğünü sil">&#10005;</button>
+          <button class="remove-meal-btn" onclick="removeMeal(${mealIdx})" title="${t('deleteMeal')}">&#10005;</button>
         </div>
       </div>`;
     const entriesDiv = document.createElement('div');
     meal.foods.forEach((entry, foodIdx) => { entriesDiv.appendChild(createFoodEntryEl(mealIdx, foodIdx, entry)); });
     section.appendChild(entriesDiv);
-    const addBtn = document.createElement('button'); addBtn.className='add-food-btn'; addBtn.innerHTML='&#43; Besin Ekle';
+    const addBtn = document.createElement('button'); addBtn.className='add-food-btn'; addBtn.textContent=t('addFood');
     addBtn.addEventListener('click', () => addFood(mealIdx));
     section.appendChild(addBtn);
     container.appendChild(section);
@@ -1879,7 +2284,7 @@ function renderMeals() {
 
   if (meals.length < MAX_MEALS) {
     const addMealBtn = document.createElement('button'); addMealBtn.className='add-meal-btn';
-    addMealBtn.innerHTML = '&#43; Yeni Öğün Ekle';
+    addMealBtn.textContent = t('addNewMeal');
     addMealBtn.addEventListener('click', addMeal);
     container.appendChild(addMealBtn);
   }
@@ -1889,22 +2294,22 @@ function createFoodEntryEl(mealIdx, foodIdx, entry) {
   const div = document.createElement('div'); div.className = 'food-entry';
   div.innerHTML = `
     <div class="food-entry-top">
-      <input class="food-input name" type="text" placeholder="Besin adı" value="${escapeHtml(entry.name||'')}"
+      <input class="food-input name" type="text" placeholder="${t('foodName')}" value="${escapeHtml(entry.name||'')}"
         oninput="updateEntry(${mealIdx},${foodIdx},'name',this.value); showAutocomplete(this,${mealIdx},${foodIdx})"
         onfocus="showAutocomplete(this,${mealIdx},${foodIdx})"
         onkeydown="handleAutocompleteKey(event,this)" autocomplete="off">
-      <input class="food-input gram" type="number" placeholder="gram" value="${entry.gram||''}"
+      <input class="food-input gram" type="number" placeholder="${t('gram')}" value="${entry.gram||''}"
         oninput="updateEntry(${mealIdx},${foodIdx},'gram',this.value)">
       <button class="remove-food" onclick="removeFood(${mealIdx}, ${foodIdx})">&#10005;</button>
     </div>
     <div class="food-entry-macros">
-      <div class="macro-input-group"><div class="macro-input-label p">Protein</div>
+      <div class="macro-input-group"><div class="macro-input-label p">${t('proteinShort')}</div>
         <input class="food-input" type="number" step="0.1" placeholder="0" value="${entry.p||''}" oninput="updateEntry(${mealIdx},${foodIdx},'p',this.value)"></div>
-      <div class="macro-input-group"><div class="macro-input-label c">Karb</div>
+      <div class="macro-input-group"><div class="macro-input-label c">${t('carbShort')}</div>
         <input class="food-input" type="number" step="0.1" placeholder="0" value="${entry.c||''}" oninput="updateEntry(${mealIdx},${foodIdx},'c',this.value)"></div>
-      <div class="macro-input-group"><div class="macro-input-label f">Yağ</div>
+      <div class="macro-input-group"><div class="macro-input-label f">${t('fatShort')}</div>
         <input class="food-input" type="number" step="0.1" placeholder="0" value="${entry.f||''}" oninput="updateEntry(${mealIdx},${foodIdx},'f',this.value)"></div>
-      <div class="macro-input-group"><div class="macro-input-label k">Kalori</div>
+      <div class="macro-input-group"><div class="macro-input-label k">${t('calories')}</div>
         <input class="food-input" type="number" step="0.1" placeholder="0" value="${entry.cal||''}" oninput="updateEntry(${mealIdx},${foodIdx},'cal',this.value)"></div>
     </div>`;
   return div;
@@ -1948,13 +2353,13 @@ function renderAvgRow(id, label, days) {
   if (!avg) {
     el.innerHTML = `<div class="avg-row-label">${label}</div><div class="avg-row-values">${dim}</div>`;
   } else {
-    el.innerHTML = `<div class="avg-row-label">${label} <span style="font-weight:400;color:var(--text-muted)">(${avg.count} gün)</span></div><div class="avg-row-values"><div class="avg-macro p"><div class="avg-macro-val">${Math.round(avg.p)}</div><div class="avg-macro-label">P</div></div><div class="avg-macro c"><div class="avg-macro-val">${Math.round(avg.c)}</div><div class="avg-macro-label">K</div></div><div class="avg-macro f"><div class="avg-macro-val">${Math.round(avg.f)}</div><div class="avg-macro-label">Y</div></div><div class="avg-macro k"><div class="avg-macro-val">${Math.round(avg.cal)}</div><div class="avg-macro-label">Cal</div></div></div>`;
+    el.innerHTML = `<div class="avg-row-label">${label} <span style="font-weight:400;color:var(--text-muted)">(${avg.count} ${t('days')})</span></div><div class="avg-row-values"><div class="avg-macro p"><div class="avg-macro-val">${Math.round(avg.p)}</div><div class="avg-macro-label">P</div></div><div class="avg-macro c"><div class="avg-macro-val">${Math.round(avg.c)}</div><div class="avg-macro-label">K</div></div><div class="avg-macro f"><div class="avg-macro-val">${Math.round(avg.f)}</div><div class="avg-macro-label">Y</div></div><div class="avg-macro k"><div class="avg-macro-val">${Math.round(avg.cal)}</div><div class="avg-macro-label">Cal</div></div></div>`;
   }
 }
 function renderAverages() {
-  renderAvgRow('avg7', 'Son 7 gün', 7);
-  renderAvgRow('avg30', 'Son 30 gün', 30);
-  renderAvgRow('avg90', 'Son 90 gün', 90);
+  renderAvgRow('avg7', t('last7'), 7);
+  renderAvgRow('avg30', t('last30'), 30);
+  renderAvgRow('avg90', t('last90'), 90);
 }
 
 // ============ TARGETS ============
@@ -2000,7 +2405,7 @@ function saveToCustomFoods(entry) {
 function deleteCustomFood(idx) { customFoods.splice(idx,1); saveData(true); renderGuide(); }
 function createFood() {
   const name = document.getElementById('cf-name').value.trim();
-  if (!name) { showToast('Besin adı girin'); return; }
+  if (!name) { showToast(t('enterFoodName')); return; }
   const portion = document.getElementById('cf-portion').value.trim()||'';
   const p = parseFloat(document.getElementById('cf-p').value)||0;
   const c = parseFloat(document.getElementById('cf-c').value)||0;
@@ -2012,7 +2417,7 @@ function createFood() {
   saveData(true); renderGuide();
   document.getElementById('cf-name').value=''; document.getElementById('cf-portion').value='';
   document.getElementById('cf-p').value=''; document.getElementById('cf-c').value=''; document.getElementById('cf-f').value='';
-  showToast(`${name} kaydedildi`);
+  showToast(`${name} ${t('saved')}`);
 }
 
 // ============ AUTOCOMPLETE ============
@@ -2057,7 +2462,7 @@ function renderGuideTable(foods) {
     const idx = customFoods.indexOf(food);
     const tr = document.createElement('tr');
     tr.innerHTML = `<td>${escapeHtml(food.name)}<span class="food-portion">${food.portion||''}</span></td><td>${food.p}</td><td>${food.c}</td><td>${food.f}</td><td>${food.cal}</td>
-      <td><button class="delete-custom-food" onclick="event.stopPropagation();deleteCustomFood(${idx})" title="Sil">&#10005;</button></td>`;
+      <td><button class="delete-custom-food" onclick="event.stopPropagation();deleteCustomFood(${idx})" title="${t('delete')}">&#10005;</button></td>`;
     tr.addEventListener('click', () => openMealPicker(food));
     body.appendChild(tr);
   });
@@ -2071,15 +2476,15 @@ function filterGuide() {
 // ============ MEAL PICKER (for guide click) ============
 let pendingGuideFood = null;
 function openMealPicker(food) {
-  if (!selectedDate) { showToast('Önce takvimden bir gün seçin'); return; }
+  if (!selectedDate) { showToast(t('selectDayFirst')); return; }
   const meals = getMeals();
-  if (meals.length === 0) { showToast('Önce bir öğün ekleyin'); return; }
+  if (meals.length === 0) { showToast(t('addMealFirst')); return; }
   pendingGuideFood = food;
-  document.getElementById('mealPickerTitle').textContent = `"${food.name}" hangi öğüne eklensin?`;
+  document.getElementById('mealPickerTitle').textContent = `"${food.name}" ${t('whichMeal')}`;
   const opts = document.getElementById('mealPickerOptions'); opts.innerHTML = '';
   meals.forEach((m, i) => {
     const opt = document.createElement('div'); opt.className='meal-picker-option';
-    opt.innerHTML = `<span>Meal ${i+1}</span><span class="meal-num">${m.foods.length} besin</span>`;
+    opt.innerHTML = `<span>Meal ${i+1}</span><span class="meal-num">${m.foods.length} ${t('foodsCount')}</span>`;
     opt.addEventListener('click', () => { addFoodToMeal(i, food); closeMealPicker(); });
     opts.appendChild(opt);
   });
