@@ -1181,9 +1181,59 @@ body {
 
 .guide-table tbody tr:hover .delete-custom-food { opacity: 1; }
 
+/* Mobile Tab Bar */
+.mobile-tab-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border-top: 0.5px solid var(--border);
+  z-index: 200;
+  padding: 6px 0;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+}
+
+.mobile-tab-bar-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobile-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.62rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 12px;
+  transition: var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-tab-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.mobile-tab.active {
+  color: var(--accent);
+}
+
+.mobile-tab.active .mobile-tab-label {
+  font-weight: 600;
+}
+
 /* Mobile */
 @media (max-width: 900px) {
-  .macos-window { margin: 0; border-radius: 0; }
+  .macos-window { margin: 0; border-radius: 0; padding-bottom: 72px; }
   .content { flex-direction: column; }
   .detail-panel {
     width: 100%;
@@ -1194,6 +1244,8 @@ body {
   .targets-bar { grid-template-columns: repeat(2, 1fr); }
   .averages-section { grid-template-columns: 1fr; gap: 6px; }
   .header { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .header .tabs { display: none; }
+  .mobile-tab-bar { display: block; }
   .day-cell { min-height: 48px; }
   .day-cal-mini { display: none; }
   .titlebar { display: none; }
@@ -1665,6 +1717,23 @@ body {
 </div>
 </div>
 
+<div class="mobile-tab-bar" id="mobileTabBar">
+  <div class="mobile-tab-bar-inner">
+    <button class="mobile-tab active" data-tab="calendar" onclick="switchTab('calendar')" id="mobileTabCalendar">
+      <span class="mobile-tab-icon">&#128197;</span>
+      <span class="mobile-tab-label">Takvim</span>
+    </button>
+    <button class="mobile-tab" data-tab="guide" onclick="switchTab('guide')" id="mobileTabGuide">
+      <span class="mobile-tab-icon">&#127860;</span>
+      <span class="mobile-tab-label">Besinlerim</span>
+    </button>
+    <button class="mobile-tab" data-tab="settings" onclick="switchTab('settings')" id="mobileTabSettings">
+      <span class="mobile-tab-icon">&#9881;</span>
+      <span class="mobile-tab-label">Ayarlar</span>
+    </button>
+  </div>
+</div>
+
 <div class="target-edit-overlay" id="targetOverlay">
   <div class="target-edit-modal">
     <h3>Günlük Hedefler</h3>
@@ -1936,6 +2005,13 @@ function applyLanguage() {
   document.getElementById('tabCalendar').textContent = t('calendar');
   document.getElementById('tabGuide').textContent = t('myFoods');
   document.getElementById('tabSettings').textContent = t('settings');
+  // Mobile tab bar labels
+  const mtCal = document.querySelector('#mobileTabCalendar .mobile-tab-label');
+  const mtGuide = document.querySelector('#mobileTabGuide .mobile-tab-label');
+  const mtSettings = document.querySelector('#mobileTabSettings .mobile-tab-label');
+  if (mtCal) mtCal.textContent = t('calendar');
+  if (mtGuide) mtGuide.textContent = t('myFoods');
+  if (mtSettings) mtSettings.textContent = t('settings');
   // Target labels
   const targetLabels = document.querySelectorAll('.target-card .label');
   if (targetLabels[0]) targetLabels[0].textContent = t('protein');
@@ -2158,7 +2234,9 @@ function initApp() {
 // ============ TABS ============
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll(`.tab[data-tab="${tab}"]`).forEach(t => t.classList.add('active'));
+  document.querySelectorAll(`.mobile-tab[data-tab="${tab}"]`).forEach(t => t.classList.add('active'));
   document.getElementById('calendarView').classList.toggle('active', tab === 'calendar');
   document.getElementById('guideView').classList.toggle('active', tab === 'guide');
   document.getElementById('settingsView').classList.toggle('active', tab === 'settings');
