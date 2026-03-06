@@ -1542,7 +1542,10 @@ function handleGoogleSignIn() {
     });
 }
 
-function handleLogout() {
+async function handleLogout() {
+  // Force save to Firestore before signing out
+  clearTimeout(firestoreSaveTimeout);
+  await saveToFirestoreNow();
   auth.signOut();
 }
 
@@ -1624,11 +1627,14 @@ async function saveToFirestoreNow() {
   }
 }
 
-function saveData() {
+function saveData(immediate) {
   saveToLocalStorageCache();
-  // Debounced Firestore save (800ms)
   clearTimeout(firestoreSaveTimeout);
-  firestoreSaveTimeout = setTimeout(() => saveToFirestoreNow(), 800);
+  if (immediate) {
+    saveToFirestoreNow();
+  } else {
+    firestoreSaveTimeout = setTimeout(() => saveToFirestoreNow(), 800);
+  }
   if (typeof renderAverages === 'function') renderAverages();
 }
 
@@ -1708,12 +1714,12 @@ function addMeal() {
   const meals = getMeals();
   if (meals.length >= MAX_MEALS) { showToast('En fazla 8 öğün ekleyebilirsiniz'); return; }
   meals.push({ foods: [] });
-  saveData(); renderMeals(); renderCalendar();
+  saveData(true); renderMeals(); renderCalendar();
 }
 
 function removeMeal(mealIdx) {
   getMeals().splice(mealIdx, 1);
-  saveData(); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
+  saveData(true); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
 }
 
 function addFood(mealIdx) {
@@ -1723,7 +1729,7 @@ function addFood(mealIdx) {
 
 function removeFood(mealIdx, foodIdx) {
   getMeals()[mealIdx].foods.splice(foodIdx, 1);
-  saveData(); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
+  saveData(true); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
 }
 
 function updateEntry(mealIdx, foodIdx, field, value) {
@@ -1872,7 +1878,7 @@ function saveTargets() {
   targets.carb=parseInt(document.getElementById('edit-carb').value)||0;
   targets.fat=parseInt(document.getElementById('edit-fat').value)||0;
   targets.cal=parseInt(document.getElementById('edit-cal').value)||0;
-  saveData(); updateTargetDisplay(); closeTargetEditor();
+  saveData(true); updateTargetDisplay(); closeTargetEditor();
 }
 document.getElementById('targetOverlay').addEventListener('click', function(e){ if(e.target===this) closeTargetEditor(); });
 
@@ -1887,7 +1893,7 @@ function saveToCustomFoods(entry) {
   if (existing>=0) customFoods[existing]=obj; else customFoods.push(obj);
   saveData();
 }
-function deleteCustomFood(idx) { customFoods.splice(idx,1); saveData(); renderGuide(); }
+function deleteCustomFood(idx) { customFoods.splice(idx,1); saveData(true); renderGuide(); }
 function createFood() {
   const name = document.getElementById('cf-name').value.trim();
   if (!name) { showToast('Besin adı girin'); return; }
@@ -1899,7 +1905,7 @@ function createFood() {
   const existing = customFoods.findIndex(fd => fd.name.toLowerCase()===name.toLowerCase());
   const obj = { name, portion, p, c, f, cal };
   if (existing>=0) customFoods[existing]=obj; else customFoods.push(obj);
-  saveData(); renderGuide();
+  saveData(true); renderGuide();
   document.getElementById('cf-name').value=''; document.getElementById('cf-portion').value='';
   document.getElementById('cf-p').value=''; document.getElementById('cf-c').value=''; document.getElementById('cf-f').value='';
   showToast(`${name} kaydedildi`);
@@ -1928,7 +1934,7 @@ function selectAutocomplete(food, mealIdx, foodIdx) {
   const entry = getMeals()[mealIdx].foods[foodIdx];
   entry.name=food.name; entry.p=food.p; entry.c=food.c; entry.f=food.f; entry.cal=food.cal;
   if (food.portion) { const m=food.portion.match(/(\d+)/); if(m) entry.gram=parseInt(m[1]); }
-  hideAutocomplete(); saveData(); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
+  hideAutocomplete(); saveData(true); renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
 }
 document.addEventListener('click', e => { if(!e.target.classList.contains('food-input')||!e.target.classList.contains('name')) hideAutocomplete(); });
 
@@ -1980,7 +1986,7 @@ document.getElementById('mealPickerOverlay').addEventListener('click', function(
 
 function addFoodToMeal(mealIdx, food) {
   getMeals()[mealIdx].foods.push({ name:food.name, gram:food.portion&&food.portion.match(/(\d+)/)?parseInt(food.portion.match(/(\d+)/)[1]):'', p:food.p, c:food.c, f:food.f, cal:food.cal });
-  saveData(); showToast(`${food.name} → Meal ${mealIdx+1}`);
+  saveData(true); showToast(`${food.name} → Meal ${mealIdx+1}`);
   renderMeals(); updateDaySummary(); updateTargetDisplay(); renderCalendar();
 }
 
